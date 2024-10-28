@@ -1,9 +1,12 @@
 {
-    "cSpell.words": [
-        "Codigo",
-        "dotenv",
-        "Entrar",
-        "formkey",
-        "senha"
-    ]
+  "cSpell.words": [
+    "Codigo",
+    "Consulta",
+    "dotenv",
+    "Entrar",
+    "formkey",
+    "Inicio",
+    "senha"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.24.3"
 }

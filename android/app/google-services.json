@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533485142059",
+    "project_id": "app-mais-saude-73627",
+    "storage_bucket": "app-mais-saude-73627.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533485142059:android:e975e35a58c2f39d252a6e",
+        "android_client_info": {
+          "package_name": "com.example.app_mais_saude"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAjjDaGVf9uoRF8ki-gQL6A3pEyCS96s8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

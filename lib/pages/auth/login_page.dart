@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../enum/mensagem_tipo_enum.dart';
+import '../../services/my_shared_preferences.dart';
+import '../../utils/console_log.dart';
+import '../../utils/shared_preferences_helper.dart';
 import '../../widgets/custom_codigo_field.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_password_field.dart';
@@ -38,6 +42,8 @@ class _LoginPageState extends State<LoginPage> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
+                 
+      
                     const SizedBox(height: 80),
                     SizedBox(
                       width: 2000,
@@ -101,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     ),
+                    
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Container(
@@ -108,15 +115,17 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.infinity,
                         child: CustomElevatedButton(
                           isLoading: _isLoading,
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-
-
                               setState(() {
                                 _isLoading = true;
                               });
+                              
+                              MySharedPreferences mySharedPreferences = MySharedPreferences();
 
-                              Future.delayed(const Duration(seconds: 3), () {
+                              await mySharedPreferences.add(id: 1, name: 'Lucas', tokenApi: '88888888888');
+
+                              await Future.delayed(const Duration(seconds: 3), () {
                                 setState(() {
                                   _isLoading = false;
                                 });

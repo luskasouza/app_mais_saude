@@ -12,10 +12,9 @@ import 'pages/consulta/consulta_page.dart';
 import 'pages/home/home_page.dart';
 import 'utils/console_log.dart';
 import 'utils/firebase_messaging.dart';
-import 'utils/permission.dart';
 import 'utils/permission_manager.dart';
 import 'utils/theme.dart';
- 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -38,30 +37,15 @@ void main() async {
 }
 
 Future<void> _initializePermissionsAndMessaging() async {
-  final notificationPermission = NotificationPermission();
   final permissionManager = PermissionManager();
 
-  bool isNotificationGranted = await notificationPermission.checkNotificationPermission();
-  if (!isNotificationGranted) {
-    bool requestGranted = await notificationPermission.requestNotificationPermission();
-    ConsoleLog.mensagem(
-      titulo: "Permissão de Notificação",
-      mensagem: requestGranted 
-          ? "Permissão de notificação concedida!" 
-          : "Permissão de notificação negada.",
-      tipo: requestGranted ? MensagemTipo.SUCESSO : MensagemTipo.ERROR,
-    );
-  } else {
-    ConsoleLog.mensagem(
-      titulo: "Permissão de Notificação",
-      mensagem: "Permissão de notificação já concedida.",
-      tipo: MensagemTipo.INFORMACAO,
-    );
-  }
-
+  // Verificação e solicitação de permissões necessárias
   bool hasPhonePermission = await permissionManager.checkPhoneStatePermission();
   bool hasLocationPermission = await permissionManager.checkLocationPermission();
-
+  bool hasBackgroundLocationPermission = await permissionManager.checkBackgroundLocationPermission();
+  bool hasCoarseLocationPermission = await permissionManager.checkCoarseLocationPermission();
+  bool hasLocationExtraCommandsPermission = await permissionManager.checkLocationExtraCommandsPermission();
+  
   ConsoleLog.mensagem(
     titulo: "Permissão de Telefone",
     mensagem: hasPhonePermission 
@@ -78,6 +62,23 @@ Future<void> _initializePermissionsAndMessaging() async {
     tipo: hasLocationPermission ? MensagemTipo.SUCESSO : MensagemTipo.ERROR,
   );
 
+  ConsoleLog.mensagem(
+    titulo: "Permissão de Localização em Segundo Plano",
+    mensagem: hasBackgroundLocationPermission 
+        ? "Permissão de localização em segundo plano concedida." 
+        : "Permissão de localização em segundo plano negada.",
+    tipo: hasBackgroundLocationPermission ? MensagemTipo.SUCESSO : MensagemTipo.ERROR,
+  );
+
+  ConsoleLog.mensagem(
+    titulo: "Permissão de Localização Aproximada",
+    mensagem: hasCoarseLocationPermission 
+        ? "Permissão de localização aproximada concedida." 
+        : "Permissão de localização aproximada negada.",
+    tipo: hasCoarseLocationPermission ? MensagemTipo.SUCESSO : MensagemTipo.ERROR,
+  );
+
+  // Verifica a conexão com a internet
   bool isInternetAvailable = await permissionManager.checkInternetConnection();
   ConsoleLog.mensagem(
     titulo: "Conexão com a Internet",
@@ -87,6 +88,16 @@ Future<void> _initializePermissionsAndMessaging() async {
     tipo: isInternetAvailable ? MensagemTipo.SUCESSO : MensagemTipo.ERROR,
   );
 
+  ConsoleLog.mensagem(
+    titulo: "Permissão de Acesso a Comandos de Localização Extras",
+    mensagem: hasLocationExtraCommandsPermission 
+        ? "Permissão de acesso a comandos de localização extras concedida." 
+        : "Permissão de acesso a comandos de localização extras negada.",
+    tipo: hasLocationExtraCommandsPermission ? MensagemTipo.SUCESSO : MensagemTipo.ERROR,
+  );
+
+
+  // Configuração do Firebase Messaging
   final myFirebaseMessaging = MyFirebaseMessaging();
   await myFirebaseMessaging.setupFirebaseMessaging();
 }
@@ -112,5 +123,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
- 

@@ -54,6 +54,7 @@ dependencies:
   shared_preferences: ^2.3.2
   flutter_secure_storage: ^4.2.1
   shared_preferences_storage_view_driver: ^0.1.0-dev.4
+  introduction_screen: ^3.1.12
 
 dev_dependencies:
   flutter_test:
@@ -78,7 +79,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/logo.png
+    -  assets/
+    -  assets/logo.png
     - .env
   #   - images/a_dot_ham.jpeg
 

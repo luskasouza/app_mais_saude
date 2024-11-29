@@ -10,6 +10,7 @@ import 'pages/agenda/agenda_page.dart';
 import 'pages/auth/login_page.dart';
 import 'pages/consulta/consulta_page.dart';
 import 'pages/home/home_page.dart';
+import 'pages/introduction/on_boarding_page.dart';
 import 'utils/console_log.dart';
 import 'utils/firebase_messaging.dart';
 import 'utils/permission_manager.dart';
@@ -113,8 +114,9 @@ class MyApp extends StatelessWidget {
       title: appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: '/login',
+      initialRoute: '/introduction',
       routes: {
+        '/introduction': (context) => const OnBoardingPage(),
         '/login': (context) => LoginPage(title: appName),
         '/home': (context) => const HomePage(),
         '/consulta': (context) => const ConsultaPage(),

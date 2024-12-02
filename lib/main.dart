@@ -2,8 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Adicione a importação do pacote
 import 'enum/mensagem_tipo_enum.dart';
 import 'firebase_options.dart';
 import 'pages/agenda/agenda_page.dart';
@@ -19,19 +17,15 @@ import 'utils/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Load environment variables
   await dotenv.load(fileName: ".env");
 
-  // Set system UI overlay settings
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.manual,
     overlays: SystemUiOverlay.values,
   );
 
-  // Initialize permissions and Firebase Messaging
   await _initializePermissionsAndMessaging();
 
   runApp(const MyApp());

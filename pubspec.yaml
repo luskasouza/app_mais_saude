@@ -55,6 +55,7 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   shared_preferences_storage_view_driver: ^0.1.0-dev.4
   introduction_screen: ^3.1.12
+  device_info_plus: ^11.1.1
 
 dev_dependencies:
   flutter_test:

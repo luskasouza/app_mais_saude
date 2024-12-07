@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../enum/mensagem_tipo_enum.dart';
 import '../../services/my_shared_preferences.dart';
-import '../../utils/console_log.dart';
-import '../../utils/shared_preferences_helper.dart';
 import '../../widgets/custom_codigo_field.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_password_field.dart';
+import 'auth_controller_.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -22,11 +20,14 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   final TextEditingController _codigoController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
+  final AuthController _authController = AuthController();
 
   String? descricaoEscola;
 
   @override
   Widget build(BuildContext context) {
+    _codigoController.text = 'devs@example.com';
+    _senhaController.text = 'password';
     return Scaffold(
       backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -42,8 +43,6 @@ class _LoginPageState extends State<LoginPage> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
-                 
-      
                     const SizedBox(height: 80),
                     SizedBox(
                       width: 2000,
@@ -107,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: Container(
@@ -120,20 +118,31 @@ class _LoginPageState extends State<LoginPage> {
                               setState(() {
                                 _isLoading = true;
                               });
-                              
-                              MySharedPreferences mySharedPreferences = MySharedPreferences();
 
-                              await mySharedPreferences.add(id: 1, name: 'Lucas', tokenApi: '88888888888');
+                              bool isSuccess = await _authController.authLogin(
+                                _codigoController.text.toString(),
+                                _senhaController.text.toString(),
+                              );
 
-                              await Future.delayed(const Duration(seconds: 3), () {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                                Navigator.pushNamed(context, '/home');
+                              setState(() {
+                                _isLoading = false;
                               });
+
+                              if (isSuccess) { 
+                                Navigator.pushNamed(context, '/home');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Credenciais inválidas. Verifique o código e senha.',
+                                    ),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
                             }
                           },
-                          label: 'Submit',
+                          label: 'Entrar',
                         ),
                       ),
                     ),

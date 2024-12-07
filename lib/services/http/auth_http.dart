@@ -14,9 +14,9 @@ class AuthHttp extends BaseHttp {
     InfoPlus infoPlus = InfoPlus();
 
     final body = json.encode({
-      'email': email,
-      'password': password,
-      'device': infoPlus.packageName
+      'email': email.toString(),
+      'password': password.toString(),
+      'device': infoPlus.packageName.toString()
     });
 
     final response = await post(url, body: body);
